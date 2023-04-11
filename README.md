@@ -31,7 +31,7 @@ import 'package:sliver_appbar_builder/sliver_appbar_builder.dart';
 SliverAppBarBuilder(
   contentBuilder: (context, shrinkOffset, statusBarHeight, overlapsContent) {
     return Container(
-      color: Colors.amber,
+      color: Color.lerp(Colors.amber, Colors.red, shrinkOffset),
       child: Padding(
         padding: EdgeInsets.only(top: statusBarHeight),
         child: const Center(
