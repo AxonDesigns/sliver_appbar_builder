@@ -68,7 +68,7 @@ class SliverAppBarBuilderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return contentBuilder(context, remap(minExtent, maxExtent, 0, 1, shrinkOffset), _statusBarHeight, overlapsContent);
+    return contentBuilder(context, (shrinkOffset / (maxExtent - minExtent)).clamp(0, 1), _statusBarHeight, overlapsContent);
   }
 
   @override
