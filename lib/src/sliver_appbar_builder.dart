@@ -98,12 +98,6 @@ class SliverAppBarBuilderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return collapsedHeight != oldDelegate.minExtent ||
-        expandedHeight != oldDelegate.minExtent ||
-        snapConfig != oldDelegate.snapConfiguration ||
-        stretchConfig != oldDelegate.stretchConfiguration ||
-        onScreenConfig != oldDelegate.showOnScreenConfiguration ||
-        _statusBarHeight != MediaQueryData.fromWindow(window).padding.top ||
-        vs != oldDelegate.vsync;
+    return true;
   }
 }
