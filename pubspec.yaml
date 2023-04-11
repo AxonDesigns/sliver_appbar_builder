@@ -1,7 +1,7 @@
 name: sliver_appbar_builder
 description: Create custom sliver app bars.
 version: 0.0.1
-homepage:
+homepage: https://github.com/AxonDesigns/sliver_appbar_builder
 
 environment:
   sdk: '>=2.19.6 <3.0.0'

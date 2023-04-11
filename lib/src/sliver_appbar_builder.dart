@@ -25,6 +25,7 @@ class SliverAppBarBuilder extends StatefulWidget {
 class _SliverAppBarBuilderState extends State<SliverAppBarBuilder> with SingleTickerProviderStateMixin {
   @override
   void initState() {
+    // Delay a setState call so MediaQuery gives the right values.
     Future.delayed(const Duration(milliseconds: 50)).then((value) {
       setState(() {});
     });
