@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -8,6 +10,8 @@ class SliverAppBarBuilder extends StatefulWidget {
   final bool pinned;
   final bool floating;
   final FloatingHeaderSnapConfiguration? snapConfiguration;
+  final OverScrollHeaderStretchConfiguration? stretchConfiguration;
+  final PersistentHeaderShowOnScreenConfiguration? onScreenConfiguration;
   const SliverAppBarBuilder({
     super.key,
     required this.contentBuilder,
@@ -16,6 +20,8 @@ class SliverAppBarBuilder extends StatefulWidget {
     this.pinned = false,
     this.floating = false,
     this.snapConfiguration,
+    this.stretchConfiguration,
+    this.onScreenConfiguration,
   });
 
   @override
@@ -24,21 +30,14 @@ class SliverAppBarBuilder extends StatefulWidget {
 
 class _SliverAppBarBuilderState extends State<SliverAppBarBuilder> with SingleTickerProviderStateMixin {
   @override
-  void initState() {
-    // Delay a setState call so MediaQuery gives the right values.
-    Future.delayed(const Duration(milliseconds: 50)).then((value) {
-      setState(() {});
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
       delegate: SliverAppBarBuilderDelegate(
         collapsedHeight: widget.collapsedHeight,
         expandedHeight: widget.expandedHeight,
         snapConfig: widget.snapConfiguration,
+        stretchConfig: widget.stretchConfiguration,
+        onScreenConfig: widget.onScreenConfiguration,
         vs: this,
         contentBuilder: (BuildContext context, double shrinkOffset, double statusBarHeight, bool overlapsContent) => widget.contentBuilder(context, shrinkOffset, statusBarHeight, overlapsContent),
       ),
@@ -53,6 +52,8 @@ class SliverAppBarBuilderDelegate extends SliverPersistentHeaderDelegate {
   final double collapsedHeight;
   final double expandedHeight;
   final FloatingHeaderSnapConfiguration? snapConfig;
+  final OverScrollHeaderStretchConfiguration? stretchConfig;
+  final PersistentHeaderShowOnScreenConfiguration? onScreenConfig;
   final TickerProvider? vs;
   SliverAppBarBuilderDelegate({
     required this.contentBuilder,
@@ -60,6 +61,8 @@ class SliverAppBarBuilderDelegate extends SliverPersistentHeaderDelegate {
     this.collapsedHeight = 70,
     this.snapConfig,
     this.vs,
+    this.stretchConfig,
+    this.onScreenConfig,
   });
 
   @override
@@ -84,12 +87,23 @@ class SliverAppBarBuilderDelegate extends SliverPersistentHeaderDelegate {
   }
 
   double get _statusBarHeight {
-    final window = WidgetsBinding.instance.window;
     return MediaQueryData.fromWindow(window).padding.top;
   }
 
   @override
+  OverScrollHeaderStretchConfiguration? get stretchConfiguration => stretchConfig;
+
+  @override
+  PersistentHeaderShowOnScreenConfiguration? get showOnScreenConfiguration => onScreenConfig;
+
+  @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
+    return collapsedHeight != oldDelegate.minExtent ||
+        expandedHeight != oldDelegate.minExtent ||
+        snapConfig != oldDelegate.snapConfiguration ||
+        stretchConfig != oldDelegate.stretchConfiguration ||
+        onScreenConfig != oldDelegate.showOnScreenConfiguration ||
+        _statusBarHeight != MediaQueryData.fromWindow(window).padding.top ||
+        vs != oldDelegate.vsync;
   }
 }

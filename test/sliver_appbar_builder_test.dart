@@ -12,18 +12,22 @@ class ExamplePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBarBuilder(
-      contentBuilder: (context, shrinkOffset, statusBarHeight, overlapsContent) {
-        return Container(
-          color: Colors.amber,
-          child: Padding(
-            padding: EdgeInsets.only(top: statusBarHeight),
-            child: const Center(
-              child: Text("Home Page"),
-            ),
-          ),
-        );
-      },
+    return CustomScrollView(
+      slivers: [
+        SliverAppBarBuilder(
+          contentBuilder: (context, shrinkOffset, statusBarHeight, overlapsContent) {
+            return Container(
+              color: Color.lerp(Colors.amber, Colors.red, shrinkOffset),
+              child: Padding(
+                padding: EdgeInsets.only(top: statusBarHeight),
+                child: const Center(
+                  child: Text("Home Page"),
+                ),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }
