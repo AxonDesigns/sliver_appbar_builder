@@ -11,6 +11,13 @@ First, add the `sliver_appbar_builder` package to your pubspec.yaml.
 dependencies:
   sliver_appbar_builder: <Package version>
 ```
+or
+```yaml
+dependencies:
+  sliver_appbar_builder:
+    git: 
+      url: https://github.com/AxonDesigns/sliver_appbar_builder.git
+```
 then, use `flutter pub get`.
 
 Now, import the package in your Dart code, use:
