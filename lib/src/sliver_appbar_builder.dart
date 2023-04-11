@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:sliver_appbar_builder/src/math_utils.dart';
 
 class SliverAppBarBuilder extends StatefulWidget {
   final Widget Function(BuildContext context, double shrinkOffset, double statusBarHeight, bool overlapsContent) contentBuilder;
@@ -67,7 +68,7 @@ class SliverAppBarBuilderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return contentBuilder(context, (shrinkOffset / maxExtent), _statusBarHeight, overlapsContent);
+    return contentBuilder(context, remap(minExtent, maxExtent, 0, 1, shrinkOffset), _statusBarHeight, overlapsContent);
   }
 
   @override
