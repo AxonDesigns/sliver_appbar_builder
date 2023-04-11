@@ -29,6 +29,10 @@ import 'package:sliver_appbar_builder/sliver_appbar_builder.dart';
 
 ```Dart
 SliverAppBarBuilder(
+  expandedHeight: 150,
+  collapsedHeight: 70,
+  floating: false,
+  pinned: true,
   contentBuilder: (context, shrinkOffset, statusBarHeight, overlapsContent) {
     return Container(
       color: Color.lerp(Colors.amber, Colors.red, shrinkOffset),
